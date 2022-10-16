@@ -84,4 +84,4 @@ try:
 except ValueError:
     assert True
 else:
-    assert False, "не сгенерировалось исключение ValueError при замене предмета в объекте класса Bag по индексу"
+    # assert False, "не сгенерировалось исключение ValueError при замене предмета в объекте класса Bag по индексу"
