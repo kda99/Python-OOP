@@ -88,6 +88,7 @@ class Thing:
             object.__setattr__(self, key, value)
 
 
+# Тесты
 b = Bag(700)
 b.add_thing(Thing('книга', 100))
 b.add_thing(Thing('носки', 200))
