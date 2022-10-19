@@ -55,36 +55,41 @@ v2 = game[:, 0]  # 1, 2, 0
 '''
 
 
-class TicTacToe:                     # Игровое поле
+class TicTacToe:  # Игровое поле
     def __init__(self):
         self.pole = tuple(tuple(Cell() for _ in range(3)) for _ in range(3))
 
-    def clear(self):                 # Очистка игрового поля
+    def clear(self):  # Очистка игрового поля
         self.pole = tuple(tuple(Cell() for _ in range(3)) for _ in range(3))
 
-    def verify_index(self, value):   # Проверка корректности индекса
-        if value not in (0, 1, 2):
+    def verify_index(self, value):  # Проверка корректности индекса
+        if not isinstance(value, tuple) or len(value) != 2:
+            raise IndexError('неверный индекс клетки')
+        if any(not (0 <= x <= 3) for x in value if type(x) != slice):
             raise IndexError('неверный индекс клетки')
 
-    def verify_cell(self, value):    # Проверка занята клетка или нет
-        if not value:
-            raise ValueError('клетка уже занята')
 
     def __getitem__(self, item):
-        x = tuple(self.pole[item[0]]) if type(item[0]) == slice else self.pole[item[0]]
-        y = tuple(self.pole[item[1]]) if type(item[1]) == slice else self.pole[item[1]]
-        return self.pole[x, y].value
+        self.verify_index(item)
+        r, c = item
+        if type(r) == slice:
+            return tuple(self.pole[x][c] for x in range(3))
+        elif type(r) == slice:
+            return tuple(self.pole[r][x] for x in range(3))
 
     def __setitem__(self, key, value):
-        self.verify_cell(value.is_free)
-        self.pole[key].value = value
+        self.verify_index(key)
+        r, c = key
+        if self.pole[r][c]:
+            self.pole[r][c].value = value.value
+            self.pole[r][c].is_free = False
+        else:
+            raise ValueError('клетка уже занята')
 
-class Cell:                          # Клетка игрового поля
+class Cell:  # Клетка игрового поля
     def __init__(self):
-        self.is_free = True          # True, если клетка свободна; False в противном случае
-        self.value = 0               # Значение поля: 1 - крестик; 2 - нолик (по умолчанию 0)
+        self.is_free = True  # True, если клетка свободна; False в противном случае
+        self.value = 0  # Значение поля: 1 - крестик; 2 - нолик (по умолчанию 0)
 
-    def __bool__(self):              # Возвращает True если клетка свободна, False если нет
+    def __bool__(self):  # Возвращает True если клетка свободна, False если нет
         return self.is_free
-
-
