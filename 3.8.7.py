@@ -70,8 +70,14 @@ class TicTacToe:                     # Игровое поле
         if not value:
             raise ValueError('клетка уже занята')
 
-    # def __getitem__(self, item):
-    #     return tuple(self.pole[item]) if type(item) == slice else self.pole[item]
+    def __getitem__(self, item):
+        x = tuple(self.pole[item[0]]) if type(item[0]) == slice else self.pole[item[0]]
+        y = tuple(self.pole[item[1]]) if type(item[1]) == slice else self.pole[item[1]]
+        return self.pole[x, y].value
+
+    def __setitem__(self, key, value):
+        self.verify_cell(value.is_free)
+        self.pole[key].value = value
 
 class Cell:                          # Клетка игрового поля
     def __init__(self):
