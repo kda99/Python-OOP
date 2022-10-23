@@ -1,3 +1,39 @@
+"""                                                  Условие
+ В программе необходимо реализовать таблицу TableValues по следующей схеме:
+
+
+
+Каждая ячейка таблицы должна быть представлена классом Cell. Объекты этого класса создаются командой:
+
+cell = Cell(data)
+где data - данные в ячейке. В каждом объекте класса Cell должен формироваться локальный приватный атрибут __data с соответствующим значением. Для работы с ним в классе Cell должно быть объект-свойство (property):
+
+data - для записи и считывания информации из атрибута __data.
+
+Сам класс TableValues представляет таблицу в целом, объекты которого создаются командой:
+
+table = TableValues(rows, cols, type_data)
+где rows, cols - число строк и столбцов таблицы; type_data - тип данных ячейки (int - по умолчанию, float, list, str и т.п.). Начальные значения в ячейках таблицы равны 0 (целое число).
+
+С объектами класса TableValues должны выполняться следующие команды:
+
+table[row, col] = value# запись нового значения в ячейку с индексами row, col (индексы отсчитываются с нуля)
+value = table[row, col] # считывание значения из ячейки с индексами row, col
+
+for row in table:  # перебор по строкам
+    for value in row: # перебор по столбцам
+        print(value, end=' ')  # вывод значений ячеек в консоль
+    print()
+При попытке записать по индексам table[row, col] данные другого типа (не совпадающего с атрибутом type_data объекта класса TableValues), должно генерироваться исключение командой:
+
+raise TypeError('неверный тип присваиваемых данных')
+При работе с индексами row, col, необходимо проверять их корректность. Если индексы не целое число или они выходят за диапазон размера таблицы, то генерировать исключение командой:
+
+raise IndexError('неверный индекс')
+P.S. В программе нужно объявить только классы. Выводить на экран ничего не нужно.
+"""
+
+
 class Cell:
     def __init__(self, data):
         self.__data = data
@@ -5,12 +41,14 @@ class Cell:
     @property
     def data(self):
         return self.__data
+
     @data.setter
     def data(self, item):
         self.__data = item
 
+
 class TableValues:
-    def __init__(self, rows = 0, cols = 0, type_data = int):
+    def __init__(self, rows=0, cols=0, type_data=int):
         self.rows = rows
         self.cols = cols
         self.type_data = type_data
@@ -51,9 +89,11 @@ class TableValues:
         return self
 
     def __next__(self):
-        self.index_iter += 1
-        return self.table[self.index_iter]
-
+        if len(self.table) - 1 > self.index_iter:
+            self.index_iter += 1
+            return self.table[self.index_iter]
+        else:
+            raise StopIteration("Значения в таблице закончились")
 
 
 tb = TableValues(3, 2)
@@ -63,8 +103,8 @@ for row in tb:
     for value in row:
         m += 1
         assert type(value) == int and value == 0, "при переборе объекта класса TableValues с помощью вложенных циклов " \
-                                            "for, должен сначала возвращаться итератор для строк, а затем, этот " \
-                                            "итератор должен возвращать целые числа (значения соответствующих ячеек)"
+                                                  "for, должен сначала возвращаться итератор для строк, а затем, этот " \
+                                                  "итератор должен возвращать целые числа (значения соответствующих ячеек)"
 
 assert n > 1 and m > 1, "неверно отработали вложенные циклы для перебора ячеек таблицы"
 
