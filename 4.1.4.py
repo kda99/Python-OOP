@@ -7,5 +7,6 @@ class Singleton:
         return cls._instances[cls]
 
 
+
     def __del__(cls):
         cls.__instance = None
