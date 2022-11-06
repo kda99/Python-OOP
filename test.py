@@ -1,2 +1,10 @@
-a = '4'
-print(a.__doc__)
+class SmartPhone:
+    pass
+
+
+class IPhone(SmartPhone):
+    pass
+
+phone = IPhone()
+
+print(isinstance(phone, SmartPhone))
