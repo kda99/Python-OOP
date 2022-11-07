@@ -67,4 +67,4 @@ dict_things[th_2] = th_2
 for x in dict_things:
     print(x.name)
 
-dict_things[1] = th_1
+# dict_things[1] = th_1
