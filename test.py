@@ -1,10 +1,11 @@
-class SmartPhone:
+class N1:
     pass
 
-
-class IPhone(SmartPhone):
+class N2(N1):
     pass
 
-phone = IPhone()
+class N3(N2):
+    pass
 
-print(isinstance(phone, SmartPhone))
+a = N2()
+print(issubclass(a,N2))
