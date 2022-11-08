@@ -40,6 +40,7 @@ lst_plants - все объекты, относящиеся к растениям
 lst_mammals - все объекты, относящиеся к млекопитающим (Mammals).
 '''
 
+
 class Protists:
     def __init__(self, name, weight, old):
         self.name = name
@@ -113,3 +114,4 @@ for elem in input_lst.split('\n'):
 lst_animals = [elem for elem in lst_objs if isinstance(elem, Animals)]
 lst_plants = [elem for elem in lst_objs if isinstance(elem, Plants)]
 lst_mammals = [elem for elem in lst_objs if isinstance(elem, Mammals)]
+
